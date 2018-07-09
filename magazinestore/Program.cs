@@ -9,11 +9,13 @@ namespace magazinestore
     {
         static void Main(string[] args)
         {
-            var baseapi = "http://magazinestore.azurewebsites.net/";
-            var tokenapi = "api/token";
-            var url = baseapi + tokenapi;
+            var baseapi = "http://magazinestore.azurewebsites.net/api/";
+            var tokenapi = "token";
+            var urltoken = baseapi + tokenapi;
+            var subscribersapi = "subscribers/" + GetTokenAsync(urltoken).Result;
+            var urlsubscriber =baseapi + subscribersapi;
 
-            var result = GetTokenAsync(url).Result;
+            var result = GetSubscribers(urlsubscriber).Result;
             Console.WriteLine(result);
             Console.ReadLine();
         }        
@@ -29,7 +31,7 @@ namespace magazinestore
         {
             var client = new HttpClient();
             var json = await client.GetStringAsync(url);
-            var result = JObject.Parse(json)["token"].ToString();
+            var result = JObject.Parse(json)["data"].AsJEnumerable()[0]["magazineIds"].ToString();
             return result;
         }
     }
