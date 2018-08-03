@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using QuickType;
 
 namespace magazinestore
 {
@@ -12,7 +16,8 @@ namespace magazinestore
             var baseapi = "http://magazinestore.azurewebsites.net/api/";
             var tokenapi = "token";
             var urltoken = baseapi + tokenapi;
-            var subscribersapi = "subscribers/" + GetTokenAsync(urltoken).Result;
+            var token = GetTokenAsync(urltoken).Result;
+            var subscribersapi = "subscribers/" + token;
             var urlsubscriber =baseapi + subscribersapi;
 
             var result = GetSubscribers(urlsubscriber).Result;
@@ -27,12 +32,15 @@ namespace magazinestore
             return result;
         }
 
-        public static async Task<string> GetSubscribers(string url)
+        public static async Task<List<Person>> GetSubscribers(string url)
         {
             var client = new HttpClient();
             var json = await client.GetStringAsync(url);
-            var result = JObject.Parse(json)["data"].AsJEnumerable()[0]["magazineIds"].ToString();
-            return result;
+
+            var welcome = Welcome.FromJson(json);
+            var people = welcome.Data.ToList();
+            
+            return people;
         }
     }
 }
