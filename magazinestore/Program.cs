@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using QuickType;
 
 namespace magazinestore
 {
@@ -32,7 +30,7 @@ namespace magazinestore
             return result;
         }
 
-        public static async Task<List<Person>> GetSubscribers(string url)
+        public static async Task<List<Subscriber>> GetSubscribers(string url)
         {
             var client = new HttpClient();
             var json = await client.GetStringAsync(url);
