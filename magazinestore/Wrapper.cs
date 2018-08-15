@@ -7,10 +7,10 @@ using System.Text;
 
 namespace magazinestore
 {
-    public class Welcome
+    public class Wrapper<T>
     {
-        [JsonProperty("data")]
-        public Subscriber[] Data { get; set; }
+        //[JsonProperty("data")]
+        public T[] Data { get; set; }
 
         [JsonProperty("success")]
         public bool Success { get; set; }
@@ -18,7 +18,7 @@ namespace magazinestore
         [JsonProperty("token")]
         public string Token { get; set; }
 
-        public static Welcome FromJson(string json) => JsonConvert.DeserializeObject<Welcome>(json, Settings);
+        //public static Welcome FromJson(string json) => JsonConvert.DeserializeObject<Welcome<Subscriber>(json, Settings);
 
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {

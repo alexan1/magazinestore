@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +36,10 @@ namespace magazinestore
             var client = new HttpClient();
             var json = await client.GetStringAsync(url);
 
-            var welcome = Welcome.FromJson(json);
-            var people = welcome.Data.ToList();
+            //var welcome = Welcome.FromJson(json);
+
+            var people = JsonConvert.DeserializeObject<Wrapper<Subscriber>>(json);
+            //var people = welcome.Data.ToList();
             
             return people;
         }
@@ -46,7 +49,7 @@ namespace magazinestore
             var client = new HttpClient();
             var json = await client.GetStringAsync(url);
 
-            var welcome = Welcome.FromJson(json);
+            var welcome = Wrapper.FromJson(json);
             var people = welcome.Data.ToList();
 
             return people;
