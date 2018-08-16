@@ -36,23 +36,23 @@ namespace magazinestore
             var client = new HttpClient();
             var json = await client.GetStringAsync(url);
 
-            //var welcome = Welcome.FromJson(json);
+            var welcome = Wrapper<Subscriber>.FromJson(json);
 
-            var people = JsonConvert.DeserializeObject<Wrapper<Subscriber>>(json);
-            //var people = welcome.Data.ToList();
+            //var people = JsonConvert.DeserializeObject<Wrapper<Subscriber>>(json);
+            var people = welcome.Data.ToList();
             
             return people;
         }
 
-        public static async Task<List<string>> GetCategories(string url)
+        public static async Task<List<Category>> GetCategories(string url)
         {
             var client = new HttpClient();
             var json = await client.GetStringAsync(url);
 
-            var welcome = Wrapper.FromJson(json);
-            var people = welcome.Data.ToList();
+            var welcome = Wrapper<Category>.FromJson(json);
+            var categories = welcome.Data.ToList();
 
-            return people;
+            return categories;
         }
     }
 }

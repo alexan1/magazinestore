@@ -18,7 +18,7 @@ namespace magazinestore
         [JsonProperty("token")]
         public string Token { get; set; }
 
-        //public static Welcome FromJson(string json) => JsonConvert.DeserializeObject<Welcome<Subscriber>(json, Settings);
+        public static Wrapper<T> FromJson(string json) => JsonConvert.DeserializeObject<Wrapper<T>>(json, Settings);
 
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
