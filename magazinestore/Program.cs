@@ -18,8 +18,14 @@ namespace magazinestore
             var token = GetTokenAsync(urltoken).Result;
             var subscribersapi = "subscribers/" + token;
             var urlsubscriber =baseapi + subscribersapi;
+            var categoriesapi = "categories/" + token;
+            var urlcategories = baseapi + categoriesapi;
 
+
+            var numcategories = GetCategories(urlcategories).Result.Count();
+            Console.WriteLine(numcategories);
             var result = GetSubscribers(urlsubscriber).Result;
+
             Console.WriteLine(result);
             Console.ReadLine();
         }        
@@ -44,12 +50,12 @@ namespace magazinestore
             return people;
         }
 
-        public static async Task<List<Category>> GetCategories(string url)
+        public static async Task<List<string>> GetCategories(string url)
         {
             var client = new HttpClient();
             var json = await client.GetStringAsync(url);
 
-            var welcome = Wrapper<Category>.FromJson(json);
+            var welcome = Wrapper<string>.FromJson(json);
             var categories = welcome.Data.ToList();
 
             return categories;
